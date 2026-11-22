@@ -1,0 +1,1 @@
+Original Fish Recognition Ground-Truth dataset and copyright notice: https://groups.inf.ed.ac.uk/vision/DATASETS/FISH4KNOWLEDGE/WEBSITE/GROUNDTRUTH/RECOG/

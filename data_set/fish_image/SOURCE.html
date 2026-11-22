@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Fish Recognition Ground-Truth data</title>
+    <style type="text/css">
+        .auto-style1 {
+            width: 250px;
+        }
+
+        .auto-style2 {
+            width: 182px;
+        }
+
+        .auto-style3 {
+            width: 214px;
+        }
+        .auto-style4 {
+            width: 113px;
+        }
+        .auto-style5 {
+            width: 115px;
+        }
+    </style>
+</head>
+<body>
+    
+    
+
+    <table style="width: 100%;">
+        <tr>
+            <td><h1>Fish Recognition Ground-Truth data</h1></td>
+            <td><img src="./images/logo.jpg" alt="logo" width="148" height="120" border="0" /></td>
+        </tr>
+    </table>
+    
+    <p>This fish data is acquired from a live video dataset resulting in 27370 verified fish images.
+        The whole dataset is divided into 23 clusters and each cluster is presented by a representative species, 
+        which is based on the synapomorphies characteristic from the extent that the taxon is monophyletic.
+        The representative image indicates the distinction between clusters shown in the figure below, <i>e.g.</i> the presence or absence of components 
+        (anal-fin, nasal, infraorbitals), specific number (six dorsal-fin spines, two spiny dorsal-fins), 
+        particular shape (second dorsal-fin spine long), <i>etc</i>.
+        This figure shows the representative fish species name and the numbers of detections. 
+        The data is very imbalanced where the most frequent species is about 1000 times more than the least one. 
+        The fish detection and tracking software described in [1] is used to obtain the fish images. 
+        The fish species are manually labeled by following instructions from marine biologists [2].
+        
+
+    </p>
+
+    <p><center><img src="./images/gt_labels.png" alt="logo" width="640" border="0" /></center></p>
+
+    <p>
+        This data is organized into 23 groups, where the fish images and their masks are stored separately.
+        Each cluster has a single package. The image files are named as "tracking id_fish id". 
+        Fish images with the same "tracking id" means they are belong to the same trajectory. 
+        "fish id" is a global unique id, which ranges from 1 to 27370. 
+        A reverse table contains "file name verse cluster id" is provided at <a href="./class_id.csv">here</a>. 
+        The whole package of all groups is available <a href="./Archive/fishRecognition_GT.tar">here</a> 
+        (510,912,000 bytes,&nbsp;<a href="./Archive/fishRecognition_GT.md5">checkSum</a>).
+
+    </p>
+
+    <table style="padding: inherit; border-style: solid; border-width: thin; width: 100%;" border="1">
+        <tr>
+            <td class="auto-style1">&nbsp;ID.species</td>
+            <td class="auto-style4">&nbsp;Detection #</td>
+            <td class="auto-style5">&nbsp;Trajectory #</td>
+            <td class="auto-style2">&nbsp;Fish image</td>
+            <td class="auto-style3">&nbsp;Mask image</td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;01.<i>Dascyllus reticulatus</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;12112&nbsp;</td>
+            <td class="auto-style5">&nbsp;4240&nbsp;</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_01.tar">fish_01.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_01.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_01.tar">mask_01.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_01.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;02.<i>Plectroglyphidodon dickii</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;2683</td>
+            <td class="auto-style5">&nbsp;1225</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_02.tar">fish_02.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_02.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_02.tar">mask_02.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_02.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;03.<i>Chromis chrysura</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;3593</td>
+            <td class="auto-style5">&nbsp;1175</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_03.tar">fish_03.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_03.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_03.tar">mask_03.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_03.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;04.<i>Amphiprion clarkii</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;4049</td>
+            <td class="auto-style5">&nbsp;1021</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_04.tar">fish_04.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_04.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_04.tar">mask_04.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_04.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;05.<i>Chaetodon lunulatus</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;2534</td>
+            <td class="auto-style5">&nbsp;536</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_05.tar">fish_05.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_05.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_05.tar">mask_05.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_05.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;06.<i>Chaetodon trifascialis</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;190</td>
+            <td class="auto-style5">&nbsp;79</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_06.tar">fish_06.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_06.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_06.tar">mask_06.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_06.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;07.<i>Myripristis kuntee</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;450</td>
+            <td class="auto-style5">&nbsp;71</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_07.tar">fish_07.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_07.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_07.tar">mask_07.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_07.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;08.<i>Acanthurus nigrofuscus</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;218</td>
+            <td class="auto-style5">&nbsp;71</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_08.tar">fish_08.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_08.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_08.tar">mask_08.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_08.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;09.<i>Hemigymnus fasciatus</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;241</td>
+            <td class="auto-style5">&nbsp;58</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_09.tar">fish_09.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_09.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_09.tar">mask_09.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_09.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;10.<i>Neoniphon sammara</i> &nbsp;</td>
+            <td class="auto-style4">&nbsp;299</td>
+            <td class="auto-style5">&nbsp;53</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_10.tar">fish_10.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_10.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_10.tar">mask_10.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_10.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;11.<i>Abudefduf vaigiensis</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;98</td>
+            <td class="auto-style5">&nbsp;42</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_11.tar">fish_11.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_11.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_11.tar">mask_11.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_11.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;12.<i>Canthigaster valentini</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;147</td>
+            <td class="auto-style5">&nbsp;28</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_12.tar">fish_12.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_12.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_12.tar">mask_12.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_12.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;13.<i>Pomacentrus moluccensis</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;181</td>
+            <td class="auto-style5">&nbsp;27</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_13.tar">fish_13.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_13.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_13.tar">mask_13.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_13.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;14.<i>Zebrasoma scopas</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;90</td>
+            <td class="auto-style5">&nbsp;23</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_14.tar">fish_14.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_14.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_14.tar">mask_14.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_14.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;15.<i>Hemigymnus melapterus</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;42</td>
+            <td class="auto-style5">&nbsp;16</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_15.tar">fish_15.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_15.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_15.tar">mask_15.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_15.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;16.<i>Lutjanus fulvus</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;206</td>
+            <td class="auto-style5">&nbsp;15</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_16.tar">fish_16.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_16.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_16.tar">mask_16.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_16.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;17.<i>Scolopsis bilineata</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;49</td>
+            <td class="auto-style5">&nbsp;8</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_17.tar">fish_17.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_17.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_17.tar">mask_17.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_17.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;18.<i>Scaridae</i> &nbsp;</td>
+            <td class="auto-style4">&nbsp;56</td>
+            <td class="auto-style5">&nbsp;5</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_18.tar">fish_18.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_18.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_18.tar">mask_18.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_18.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;19.<i>Pempheris vanicolensis</i> &nbsp;</td>
+            <td class="auto-style4">&nbsp;29</td>
+            <td class="auto-style5">&nbsp;6</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_19.tar">fish_19.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_19.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_19.tar">mask_19.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_19.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;20.<i>Zanclus cornutus</i>&nbsp;</td>
+            <td class="auto-style4">&nbsp;21</td>
+            <td class="auto-style5">&nbsp;6</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_20.tar">fish_20.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_20.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_20.tar">mask_20.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_20.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;21.<i>Neoglyphidodon nigroris</i> &nbsp;</td>
+            <td class="auto-style4">&nbsp;16</td>
+            <td class="auto-style5">&nbsp;8</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_21.tar">fish_21.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_21.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_21.tar">mask_21.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_21.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;22.<i>Balistapus undulatus</i> &nbsp;</td>
+            <td class="auto-style4">&nbsp;41</td>
+            <td class="auto-style5">&nbsp;6</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_22.tar">fish_22.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_22.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_22.tar">mask_22.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_22.md5">checkSum</a></td>
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;23.<i>Siganus fuscescens</i> &nbsp;</td>
+            <td class="auto-style4">&nbsp;25</td>
+            <td class="auto-style5">&nbsp;6</td>
+            <td class="auto-style2">&nbsp;<a href="./Archive/fish_image/fish_23.tar">fish_23.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/fish_image/fish_23.md5">checkSum</a></td>
+            <td class="auto-style3">&nbsp;<a href="./Archive/mask_image/mask_23.tar">mask_23.tar</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./Archive/mask_image/mask_23.md5">checkSum</a></td>
+        </tr>
+
+    </table>
+
+    <p>
+        Page created by Phoenix X. Huang, Bastiaan B. Boom and Robert B. Fisher. Permission is granted for anyone to copy, use, modify, or distribute this data and accompanying documents for any purpose, provided this copyright notice is retained and prominently displayed, along with a note saying that the original data are available from our web page and refering to [2]. The data and documents are distributed without any warranty, express or implied. As the data were acquired for research purposes only, they have not been tested to the degree that would be advisable in any important application. All use of these data is entirely at the user's own risk.
+    </p>
+
+    <h3>Acknowledgments: This research was funded by European Commission FP7 grant 257024, in the <a href="http://www.fish4knowledge.eu">Fish4Knowledge project</a>.</h3>
+
+    <p>
+        [1]. B. J. Boom, P. X. Huang, C. Spampinato, S. Palazzo, J. He, C. Beyan, E. Beauxis-Aussalet, J. van Ossenbruggen, G. Nadarajan, J. Y. Chen-Burger, D. Giordano, L. Hardman, F.-P. Lin, R. B. Fisher, "Long-term underwater camera surveillance for monitoring and analysis of fish populations", Proc. Int. Workshop on Visual observation and Analysis of Animal and Insect Behavior (VAIB), in conjunction with ICPR 2012, Tsukuba, Japan, 2012.<br />
+        [2]. B. J. Boom, P. X. Huang, J. He, R. B. Fisher, "Supporting Ground-Truth annotation of image datasets using clustering", 21st Int. Conf. on Pattern Recognition (ICPR), 2012.<br />
+    </p>
+
+<br>
+<br>
+<p>
+<!-- see: ~dai/web/apache/cgi-bin/pg_deg_enq and ~rbf/public_html/COUNTERS -->
+There have been
+<img src="http://homepages.inf.ed.ac.uk/cgi/rbf/frticket?-w48-h12"  alt="******"
+        width=48 height=12>
+accesses since October 2013.
+
+<script type="text/javascript">
+document.write("Date of last change to this page: " + document.lastModified);
+</script>
+
+<p>&copy;&nbsp;2013&nbsp;Robert&nbsp;Fisher
+
+<p><a href="http://validator.w3.org"><img border=0
+     src="vh40.gif"
+     alt="Valid HTML 4.0!" height=31 width=88></a>
+
+
+</body>
+</html>

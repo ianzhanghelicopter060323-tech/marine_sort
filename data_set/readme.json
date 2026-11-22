@@ -1,0 +1,145 @@
+{
+    "all_class_name": "fish_image",
+    "all_class_sum": 23,
+    "all_class_images": 27370,
+    "class_detail": [
+        {
+            "class_name": "fish_01",
+            "class_label": 0,
+            "class_eval_images": 1212,
+            "class_trainer_images": 10900
+        },
+        {
+            "class_name": "fish_02",
+            "class_label": 1,
+            "class_eval_images": 269,
+            "class_trainer_images": 2414
+        },
+        {
+            "class_name": "fish_03",
+            "class_label": 2,
+            "class_eval_images": 360,
+            "class_trainer_images": 3233
+        },
+        {
+            "class_name": "fish_04",
+            "class_label": 3,
+            "class_eval_images": 405,
+            "class_trainer_images": 3644
+        },
+        {
+            "class_name": "fish_05",
+            "class_label": 4,
+            "class_eval_images": 254,
+            "class_trainer_images": 2280
+        },
+        {
+            "class_name": "fish_06",
+            "class_label": 5,
+            "class_eval_images": 19,
+            "class_trainer_images": 171
+        },
+        {
+            "class_name": "fish_07",
+            "class_label": 6,
+            "class_eval_images": 45,
+            "class_trainer_images": 405
+        },
+        {
+            "class_name": "fish_08",
+            "class_label": 7,
+            "class_eval_images": 22,
+            "class_trainer_images": 196
+        },
+        {
+            "class_name": "fish_09",
+            "class_label": 8,
+            "class_eval_images": 25,
+            "class_trainer_images": 216
+        },
+        {
+            "class_name": "fish_10",
+            "class_label": 9,
+            "class_eval_images": 30,
+            "class_trainer_images": 269
+        },
+        {
+            "class_name": "fish_11",
+            "class_label": 10,
+            "class_eval_images": 10,
+            "class_trainer_images": 88
+        },
+        {
+            "class_name": "fish_12",
+            "class_label": 11,
+            "class_eval_images": 15,
+            "class_trainer_images": 132
+        },
+        {
+            "class_name": "fish_13",
+            "class_label": 12,
+            "class_eval_images": 19,
+            "class_trainer_images": 162
+        },
+        {
+            "class_name": "fish_14",
+            "class_label": 13,
+            "class_eval_images": 9,
+            "class_trainer_images": 81
+        },
+        {
+            "class_name": "fish_15",
+            "class_label": 14,
+            "class_eval_images": 5,
+            "class_trainer_images": 37
+        },
+        {
+            "class_name": "fish_16",
+            "class_label": 15,
+            "class_eval_images": 21,
+            "class_trainer_images": 185
+        },
+        {
+            "class_name": "fish_17",
+            "class_label": 16,
+            "class_eval_images": 5,
+            "class_trainer_images": 44
+        },
+        {
+            "class_name": "fish_18",
+            "class_label": 17,
+            "class_eval_images": 6,
+            "class_trainer_images": 50
+        },
+        {
+            "class_name": "fish_19",
+            "class_label": 18,
+            "class_eval_images": 3,
+            "class_trainer_images": 26
+        },
+        {
+            "class_name": "fish_20",
+            "class_label": 19,
+            "class_eval_images": 3,
+            "class_trainer_images": 18
+        },
+        {
+            "class_name": "fish_21",
+            "class_label": 20,
+            "class_eval_images": 2,
+            "class_trainer_images": 14
+        },
+        {
+            "class_name": "fish_22",
+            "class_label": 21,
+            "class_eval_images": 5,
+            "class_trainer_images": 36
+        },
+        {
+            "class_name": "fish_23",
+            "class_label": 22,
+            "class_eval_images": 3,
+            "class_trainer_images": 22
+        }
+    ]
+}
