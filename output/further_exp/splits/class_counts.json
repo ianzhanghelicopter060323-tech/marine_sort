@@ -1,0 +1,324 @@
+[
+  {
+    "class_name": "fish_01",
+    "label": 0,
+    "images": {
+      "train": 9690,
+      "val": 1211,
+      "test": 1211
+    },
+    "tracks": {
+      "train": 2322,
+      "val": 959,
+      "test": 959
+    }
+  },
+  {
+    "class_name": "fish_02",
+    "label": 1,
+    "images": {
+      "train": 2147,
+      "val": 268,
+      "test": 268
+    },
+    "tracks": {
+      "train": 737,
+      "val": 244,
+      "test": 244
+    }
+  },
+  {
+    "class_name": "fish_03",
+    "label": 2,
+    "images": {
+      "train": 2875,
+      "val": 359,
+      "test": 359
+    },
+    "tracks": {
+      "train": 657,
+      "val": 259,
+      "test": 259
+    }
+  },
+  {
+    "class_name": "fish_04",
+    "label": 3,
+    "images": {
+      "train": 3239,
+      "val": 405,
+      "test": 405
+    },
+    "tracks": {
+      "train": 521,
+      "val": 250,
+      "test": 250
+    }
+  },
+  {
+    "class_name": "fish_05",
+    "label": 4,
+    "images": {
+      "train": 2027,
+      "val": 254,
+      "test": 253
+    },
+    "tracks": {
+      "train": 285,
+      "val": 126,
+      "test": 125
+    }
+  },
+  {
+    "class_name": "fish_06",
+    "label": 5,
+    "images": {
+      "train": 152,
+      "val": 19,
+      "test": 19
+    },
+    "tracks": {
+      "train": 42,
+      "val": 18,
+      "test": 19
+    }
+  },
+  {
+    "class_name": "fish_07",
+    "label": 6,
+    "images": {
+      "train": 360,
+      "val": 45,
+      "test": 45
+    },
+    "tracks": {
+      "train": 34,
+      "val": 18,
+      "test": 19
+    }
+  },
+  {
+    "class_name": "fish_08",
+    "label": 7,
+    "images": {
+      "train": 174,
+      "val": 22,
+      "test": 22
+    },
+    "tracks": {
+      "train": 38,
+      "val": 16,
+      "test": 17
+    }
+  },
+  {
+    "class_name": "fish_09",
+    "label": 8,
+    "images": {
+      "train": 193,
+      "val": 24,
+      "test": 24
+    },
+    "tracks": {
+      "train": 34,
+      "val": 12,
+      "test": 12
+    }
+  },
+  {
+    "class_name": "fish_10",
+    "label": 9,
+    "images": {
+      "train": 239,
+      "val": 30,
+      "test": 30
+    },
+    "tracks": {
+      "train": 31,
+      "val": 11,
+      "test": 11
+    }
+  },
+  {
+    "class_name": "fish_11",
+    "label": 10,
+    "images": {
+      "train": 78,
+      "val": 10,
+      "test": 10
+    },
+    "tracks": {
+      "train": 24,
+      "val": 9,
+      "test": 9
+    }
+  },
+  {
+    "class_name": "fish_12",
+    "label": 11,
+    "images": {
+      "train": 117,
+      "val": 15,
+      "test": 15
+    },
+    "tracks": {
+      "train": 13,
+      "val": 7,
+      "test": 8
+    }
+  },
+  {
+    "class_name": "fish_13",
+    "label": 12,
+    "images": {
+      "train": 145,
+      "val": 18,
+      "test": 18
+    },
+    "tracks": {
+      "train": 14,
+      "val": 6,
+      "test": 7
+    }
+  },
+  {
+    "class_name": "fish_14",
+    "label": 13,
+    "images": {
+      "train": 72,
+      "val": 9,
+      "test": 9
+    },
+    "tracks": {
+      "train": 13,
+      "val": 4,
+      "test": 6
+    }
+  },
+  {
+    "class_name": "fish_15",
+    "label": 14,
+    "images": {
+      "train": 34,
+      "val": 4,
+      "test": 4
+    },
+    "tracks": {
+      "train": 10,
+      "val": 3,
+      "test": 3
+    }
+  },
+  {
+    "class_name": "fish_16",
+    "label": 15,
+    "images": {
+      "train": 165,
+      "val": 21,
+      "test": 20
+    },
+    "tracks": {
+      "train": 8,
+      "val": 4,
+      "test": 3
+    }
+  },
+  {
+    "class_name": "fish_17",
+    "label": 16,
+    "images": {
+      "train": 39,
+      "val": 6,
+      "test": 4
+    },
+    "tracks": {
+      "train": 5,
+      "val": 2,
+      "test": 1
+    }
+  },
+  {
+    "class_name": "fish_18",
+    "label": 17,
+    "images": {
+      "train": 43,
+      "val": 7,
+      "test": 6
+    },
+    "tracks": {
+      "train": 3,
+      "val": 1,
+      "test": 1
+    }
+  },
+  {
+    "class_name": "fish_19",
+    "label": 18,
+    "images": {
+      "train": 22,
+      "val": 5,
+      "test": 2
+    },
+    "tracks": {
+      "train": 4,
+      "val": 1,
+      "test": 1
+    }
+  },
+  {
+    "class_name": "fish_20",
+    "label": 19,
+    "images": {
+      "train": 17,
+      "val": 2,
+      "test": 2
+    },
+    "tracks": {
+      "train": 3,
+      "val": 1,
+      "test": 2
+    }
+  },
+  {
+    "class_name": "fish_21",
+    "label": 20,
+    "images": {
+      "train": 13,
+      "val": 2,
+      "test": 1
+    },
+    "tracks": {
+      "train": 5,
+      "val": 2,
+      "test": 1
+    }
+  },
+  {
+    "class_name": "fish_22",
+    "label": 21,
+    "images": {
+      "train": 31,
+      "val": 6,
+      "test": 4
+    },
+    "tracks": {
+      "train": 4,
+      "val": 1,
+      "test": 1
+    }
+  },
+  {
+    "class_name": "fish_23",
+    "label": 22,
+    "images": {
+      "train": 20,
+      "val": 3,
+      "test": 2
+    },
+    "tracks": {
+      "train": 3,
+      "val": 1,
+      "test": 2
+    }
+  }
+]

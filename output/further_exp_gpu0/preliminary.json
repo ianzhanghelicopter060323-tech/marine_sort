@@ -1,0 +1,150 @@
+{
+  "settings": {
+    "batch_size": 128,
+    "epochs": 5,
+    "learning_rate": 0.0005,
+    "device": "gpu:0",
+    "omp_num_threads": "4",
+    "openblas_num_threads": "1",
+    "warmup_steps": 1,
+    "split_sha256": {
+      "train": "273047966ef1f65c0d5905ab431050ccd3c38eac960f358c7eaba3f4b095b8a6",
+      "val": "26863ee1a32c38922369e560dcc73c06577d33b67cbaddfc577fdb11739a0144",
+      "test": "bafb4f5a4a0420a6cf4f7c655523d41303f53c6bff652b7c0447a5a348f062e5"
+    }
+  },
+  "selected": [
+    {
+      "name": "cnn",
+      "ratio": null,
+      "kernel": null
+    },
+    {
+      "name": "resnet18",
+      "ratio": null,
+      "kernel": null
+    },
+    {
+      "name": "se",
+      "ratio": 32,
+      "kernel": null
+    },
+    {
+      "name": "cbam",
+      "ratio": 16,
+      "kernel": 3
+    }
+  ],
+  "candidates": [
+    {
+      "config": {
+        "name": "cnn",
+        "ratio": null,
+        "kernel": null
+      },
+      "macro_f1": 0.6197822720393138,
+      "accuracy": 0.9428051001821494,
+      "median_full_step_ms": 91.43711700016866
+    },
+    {
+      "config": {
+        "name": "resnet18",
+        "ratio": null,
+        "kernel": null
+      },
+      "macro_f1": 0.5156285453324881,
+      "accuracy": 0.8823315118397086,
+      "median_full_step_ms": 522.5186549996579
+    },
+    {
+      "config": {
+        "name": "se",
+        "ratio": 8,
+        "kernel": null
+      },
+      "macro_f1": 0.598693729764049,
+      "accuracy": 0.8921675774134791,
+      "median_full_step_ms": 570.502407499589
+    },
+    {
+      "config": {
+        "name": "se",
+        "ratio": 16,
+        "kernel": null
+      },
+      "macro_f1": 0.5914321946462592,
+      "accuracy": 0.9194899817850638,
+      "median_full_step_ms": 572.4823840009776
+    },
+    {
+      "config": {
+        "name": "se",
+        "ratio": 32,
+        "kernel": null
+      },
+      "macro_f1": 0.6447332316445878,
+      "accuracy": 0.9384335154826958,
+      "median_full_step_ms": 574.7402670003794
+    },
+    {
+      "config": {
+        "name": "cbam",
+        "ratio": 8,
+        "kernel": 3
+      },
+      "macro_f1": 0.5291486951613029,
+      "accuracy": 0.931511839708561,
+      "median_full_step_ms": 640.0320930006274
+    },
+    {
+      "config": {
+        "name": "cbam",
+        "ratio": 8,
+        "kernel": 7
+      },
+      "macro_f1": 0.5837858625907958,
+      "accuracy": 0.9380692167577414,
+      "median_full_step_ms": 643.3347399997729
+    },
+    {
+      "config": {
+        "name": "cbam",
+        "ratio": 16,
+        "kernel": 3
+      },
+      "macro_f1": 0.6702948362340665,
+      "accuracy": 0.9471766848816029,
+      "median_full_step_ms": 641.2799074987561
+    },
+    {
+      "config": {
+        "name": "cbam",
+        "ratio": 16,
+        "kernel": 7
+      },
+      "macro_f1": 0.6124222591715869,
+      "accuracy": 0.9406193078324225,
+      "median_full_step_ms": 636.322715499773
+    },
+    {
+      "config": {
+        "name": "cbam",
+        "ratio": 32,
+        "kernel": 3
+      },
+      "macro_f1": 0.6180218269996142,
+      "accuracy": 0.9333333333333333,
+      "median_full_step_ms": 638.0066154997621
+    },
+    {
+      "config": {
+        "name": "cbam",
+        "ratio": 32,
+        "kernel": 7
+      },
+      "macro_f1": 0.6536439278511128,
+      "accuracy": 0.9460837887067395,
+      "median_full_step_ms": 640.6391615000757
+    }
+  ]
+}
