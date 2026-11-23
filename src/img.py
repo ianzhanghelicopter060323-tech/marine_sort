@@ -15,14 +15,18 @@ import numpy as np
 
 
 DEFAULT_RESULTS = Path(__file__).resolve().parents[1] / "output" / "further_exp_gpu0"
-MODELS = ("cnn", "resnet18", "se", "cbam")
+MODELS = ("cnn", "resnet18", "se", "cbam", "cnn_cbam")
 LABELS = {
     "cnn": "CNN",
     "resnet18": "ResNet18",
     "se": "ResNet18 + SE",
     "cbam": "ResNet18 + CBAM",
+    "cnn_cbam": "CNN + CBAM",
 }
-COLORS = {"cnn": "#63748C", "resnet18": "#3672B2", "se": "#168276", "cbam": "#A75226"}
+COLORS = {
+    "cnn": "#63748C", "resnet18": "#3672B2", "se": "#168276",
+    "cbam": "#A75226", "cnn_cbam": "#8054A4",
+}
 
 
 def read_json(path):
@@ -93,12 +97,14 @@ def plot_selection(preliminary, output_dir):
 
 def plot_test_metrics(experiment, output_dir):
     """展示独立测试集的种子结果、均值与样本标准差。"""
-    figure, axes = plt.subplots(1, 2, figsize=(11, 4.5), sharey=True, constrained_layout=True)
+    models = [model for model in MODELS if model in experiment["groups"]]
+    figure, axes = plt.subplots(1, 2, figsize=(11, 2.3 + 0.55 * len(models)),
+                               sharey=True, constrained_layout=True)
     figure.suptitle("独立测试集表现 · 均值 ± 标准差（3 个种子）", fontsize=16, fontweight="bold")
     for axis, metric, title in zip(axes, ("macro_f1", "accuracy"), ("宏平均 F1", "总体准确率")):
         axis.set_title(title, loc="left")
         bounds = []
-        for index, model in enumerate(MODELS):
+        for index, model in enumerate(models):
             runs = sorted(
                 (run for run in experiment["runs"] if run["config"]["model"]["name"] == model),
                 key=lambda run: run["config"]["seed"],
@@ -115,8 +121,8 @@ def plot_test_metrics(experiment, output_dir):
                           textcoords="offset points", va="center", fontsize=9)
         axis.set_xlim(max(0, min(bounds) - 0.025), min(1.03, max(bounds) + 0.045))
         axis.xaxis.set_major_formatter(PercentFormatter(1))
-        axis.set_yticks(list(range(len(MODELS))))
-        axis.set_yticklabels([LABELS[model] for model in MODELS])
+        axis.set_yticks(list(range(len(models))))
+        axis.set_yticklabels([LABELS[model] for model in models])
         axis.grid(axis="x")
     axes[0].invert_yaxis()
     save_figure(figure, output_dir, "test_metrics.png")
@@ -124,17 +130,19 @@ def plot_test_metrics(experiment, output_dir):
 
 def plot_training_time(experiment, output_dir):
     """比较各模型总训练耗时与单步耗时。"""
-    figure, axes = plt.subplots(1, 2, figsize=(11, 4.3), sharey=True, constrained_layout=True)
+    models = [model for model in MODELS if model in experiment["groups"]]
+    figure, axes = plt.subplots(1, 2, figsize=(11, 2.1 + 0.55 * len(models)),
+                               sharey=True, constrained_layout=True)
     figure.suptitle("训练耗时 · 均值 ± 标准差（3 个种子）", fontsize=16, fontweight="bold")
     metrics = [
         ("train_seconds", "每次 5 轮训练", "分钟", 60),
         ("median_full_step_ms", "预热后完整批次中位耗时", "毫秒 / 步", 1),
     ]
-    indices = list(range(len(MODELS)))
+    indices = list(range(len(models)))
     for axis, (key, title, unit, divisor) in zip(axes, metrics):
-        values = [experiment["groups"][model][key]["mean"] / divisor for model in MODELS]
-        deviations = [experiment["groups"][model][key]["std"] / divisor for model in MODELS]
-        axis.barh(indices, values, xerr=deviations, color=[COLORS[model] for model in MODELS],
+        values = [experiment["groups"][model][key]["mean"] / divisor for model in models]
+        deviations = [experiment["groups"][model][key]["std"] / divisor for model in models]
+        axis.barh(indices, values, xerr=deviations, color=[COLORS[model] for model in models],
                   height=0.58, error_kw={"capsize": 3, "ecolor": "#263447"})
         maximum = max(value + error for value, error in zip(values, deviations))
         axis.set(xlim=(0, maximum * 1.18), xlabel=unit)
@@ -143,7 +151,7 @@ def plot_training_time(experiment, output_dir):
             axis.annotate(f"{value:.1f}", (value + error, index), xytext=(6, 0),
                           textcoords="offset points", va="center", fontsize=9)
         axis.set_yticks(indices)
-        axis.set_yticklabels([LABELS[model] for model in MODELS])
+        axis.set_yticklabels([LABELS[model] for model in models])
         axis.grid(axis="x")
     axes[0].invert_yaxis()
     save_figure(figure, output_dir, "training_time.png")
@@ -151,13 +159,17 @@ def plot_training_time(experiment, output_dir):
 
 def plot_confusion_matrices(experiment, class_counts, output_dir):
     """合并同组种子的预测计数，按真实类别归一化。"""
+    models = [model for model in MODELS if model in experiment["groups"]]
     classes = [row["class_name"].split("_", 1)[1]
                for row in sorted(class_counts, key=lambda row: row["label"])]
     ticks = list(range(len(classes)))
-    figure, axes = plt.subplots(2, 2, figsize=(11.3, 10), sharex=True, sharey=True, constrained_layout=True)
+    rows = (len(models) + 1) // 2
+    figure, axes = plt.subplots(rows, 2, figsize=(11.3, 5 * rows), sharex=True, sharey=True,
+                               constrained_layout=True)
     figure.suptitle("独立测试集混淆矩阵 · 按真实类别归一化（汇总 3 个种子）", fontsize=16, fontweight="bold")
     scale_mapping = ScalarMappable(norm=Normalize(0, 1), cmap="Blues")
-    for axis, model in zip(axes.flat, MODELS):
+    panels = axes.ravel().tolist()
+    for index, (axis, model) in enumerate(zip(panels, models)):
         counts = np.sum([run["metrics"]["confusion_matrix"] for run in experiment["runs"]
                          if run["config"]["model"]["name"] == model], axis=0)
         totals = counts.sum(axis=1, keepdims=True)
@@ -169,12 +181,36 @@ def plot_confusion_matrices(experiment, class_counts, output_dir):
         axis.set_yticks(ticks)
         axis.set_xticklabels(classes, fontsize=7)
         axis.set_yticklabels(classes, fontsize=7)
-        axis.label_outer()
-    scale = figure.colorbar(scale_mapping, ax=axes.ravel().tolist(), shrink=0.8, format=PercentFormatter(1))
+        axis.tick_params(labelbottom=index + 2 >= len(models), labelleft=index % 2 == 0)
+    for axis in panels[len(models):]:
+        axis.set_visible(False)
+    scale = figure.colorbar(scale_mapping, ax=panels[:len(models)], shrink=0.8, format=PercentFormatter(1))
     scale.set_label("占该真实类别的预测比例")
     figure.supxlabel("预测类别")
     figure.supylabel("真实类别")
     save_figure(figure, output_dir, "confusion_matrices.png")
+
+
+def plot_supplement(result, output_dir):
+    """在同一个种子内比较 CBAM 对两种骨干的宏平均 F1 增益。"""
+    rows = sorted(result["paired"], key=lambda row: row["seed"])
+    x = np.arange(len(rows))
+    figure = plt.figure(figsize=(8, 4.5), constrained_layout=True)
+    axis = plt.gca()
+    for offset, key, label, color in (
+        (-0.2, "cnn_f1_gain_pp", "CNN", COLORS["cnn"]),
+        (0.2, "resnet18_f1_gain_pp", "ResNet18", COLORS["resnet18"]),
+    ):
+        values = [row[key] for row in rows]
+        bars = axis.bar(x + offset, values, width=0.38, label=label, color=color)
+        axis.bar_label(bars, fmt="%+.2f", padding=3)
+    axis.axhline(0, linewidth=0.8, color="#263447")
+    axis.set_xticks(x, labels=[str(row["seed"]) for row in rows])
+    axis.set(xlabel="随机种子", ylabel="宏平均 F1 差值（百分点）",
+             title="同种子配对 · 各骨干加入 CBAM 后的变化")
+    axis.margins(y=0.2)
+    axis.legend()
+    save_figure(figure, output_dir, "supplement_cbam_gain.png")
 
 
 def main():
@@ -186,6 +222,11 @@ def main():
     preliminary = read_json(args.results_dir / "preliminary.json")
     experiment = read_json(args.results_dir / "experiment.json")
     class_counts = read_json(args.results_dir / "splits" / "class_counts.json")
+    supplement_path = args.results_dir / "supplement.json"
+    supplement = read_json(supplement_path) if supplement_path.is_file() else None
+    if supplement is not None:
+        experiment["groups"]["cnn_cbam"] = supplement["group"]
+        experiment["runs"].extend(supplement["runs"])
     output_dir = args.output_dir or args.results_dir / "figures"
     output_dir.mkdir(parents=True, exist_ok=True)
     configure_style()
@@ -193,6 +234,8 @@ def main():
     plot_test_metrics(experiment, output_dir)
     plot_training_time(experiment, output_dir)
     plot_confusion_matrices(experiment, class_counts, output_dir)
+    if supplement is not None:
+        plot_supplement(supplement, output_dir)
 
 
 if __name__ == "__main__":

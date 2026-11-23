@@ -21,7 +21,7 @@ from PIL import Image
 
 from data import TRACK_SPLITS, FishDataset, prepare_data, prepare_track_data
 from model import (
-    Model_CNN, Model_ResNet18, Model_ResNet18_CBAM, Model_ResNet18_SE, TrainingTimer,
+    Model_CNN, Model_CNN_CBAM, Model_ResNet18, Model_ResNet18_CBAM, Model_ResNet18_SE, TrainingTimer,
 )
 
 matplotlib.use("Agg")
@@ -94,6 +94,8 @@ class ModelConfig:
     def build(self):
         if self.name == "cnn":
             return Model_CNN()
+        if self.name == "cnn_cbam" and self.ratio == 16 and self.kernel == 3:
+            return Model_CNN_CBAM(self.ratio, self.kernel)
         if self.name == "resnet18":
             return Model_ResNet18()
         if self.name == "se" and self.ratio in (8, 16, 32):
@@ -269,11 +271,41 @@ def evaluate_saved_model(run_dir, config, training_config, test):
     write_json(run_dir / "test.json", evaluation)
 
 
+def train_and_test(root, config, seed, settings, train, val, test):
+    """完成一个种子的训练、权重重载和独立测试。"""
+    run_id = config.run_id(seed)
+    device = settings["device"]
+    result = train_configuration(root, config, seed, settings, train, val)
+    run_dir = root / run_id
+    evaluation_args = (run_dir, config, result["config"], test)
+    if device.startswith("gpu:"):
+        run_gpu_worker(device, evaluate_saved_model, *evaluation_args)
+    else:
+        evaluate_saved_model(*evaluation_args)
+    evaluation = json.loads((run_dir / "test.json").read_text(encoding="utf-8"))
+    metrics = evaluation["metrics"]
+    print(
+        f"[SUCCEED] {run_id} 独立测试完成，"
+        f"宏平均 F1 {metrics['macro_f1']:.2%}，准确率 {metrics['accuracy']:.2%}", flush=True,
+    )
+    return evaluation, score_row(metrics, result["timing"])
+
+
+def score_row(metrics, timing):
+    """提取单次独立测试与训练的比较指标。"""
+    return {
+        "macro_f1": metrics["macro_f1"],
+        "accuracy": metrics["accuracy"],
+        "train_seconds": timing["train_seconds"],
+        "median_full_step_ms": timing["median_full_step_ms"],
+        **{f"recall_{label}": value for label, value in enumerate(metrics["recall"])},
+    }
+
+
 def run_experiment(root, selection, train, val, test):
     """复用种子 42 权重，并用独立评估集进行配对比较。"""
     scores: Dict[str, dict] = {}
     per_run = []
-    device = selection["settings"].get("device", "cpu")
     for options in selection["selected"]:
         config = ModelConfig(**options)
         if not (root / config.run_id(42) / "model.pdparams").is_file():
@@ -286,27 +318,10 @@ def run_experiment(root, selection, train, val, test):
         for seed in (42, 43, 44):
             run_id = config.run_id(seed)
             print(f"[运行] {run_id}", flush=True)
-            result = train_configuration(root, config, seed, selection["settings"], train, val)
-            run_dir = root / run_id
-            evaluation_args = (run_dir, config, result["config"], test)
-            if device.startswith("gpu:"):
-                run_gpu_worker(device, evaluate_saved_model, *evaluation_args)
-            else:
-                evaluate_saved_model(*evaluation_args)
-            evaluation = json.loads((run_dir / "test.json").read_text(encoding="utf-8"))
-            metrics = evaluation["metrics"]
-            print(
-                f"[SUCCEED] {run_id} 独立测试完成，"
-                f"宏平均 F1 {metrics['macro_f1']:.2%}，准确率 {metrics['accuracy']:.2%}", flush=True,
+            evaluation, scores[config.name][seed] = train_and_test(
+                root, config, seed, selection["settings"], train, val, test
             )
             per_run.append(evaluation)
-            scores[config.name][seed] = {
-                "macro_f1": metrics["macro_f1"],
-                "accuracy": metrics["accuracy"],
-                "train_seconds": result["timing"]["train_seconds"],
-                "median_full_step_ms": result["timing"]["median_full_step_ms"],
-                **{f"recall_{label}": value for label, value in enumerate(metrics["recall"])},
-            }
         print(f"[SUCCEED] {GROUP_LABELS[config.name]} 的三个种子均已完成", flush=True)
 
     comparisons = {}
@@ -325,6 +340,57 @@ def run_experiment(root, selection, train, val, test):
         "paired_differences": comparisons,
     })
     print(f"[SUCCEED] 正式实验全部完成，结果写入 {root / 'experiment.json'}", flush=True)
+
+
+def run_supplement(root, settings, train, val, test):
+    """仅训练 CNN + CBAM，依据原始同种子结果计算两种骨干上的增益。"""
+    config = ModelConfig("cnn_cbam", 16, 3)
+    experiment = json.loads((root / "experiment.json").read_text(encoding="utf-8"))
+    references = {}
+    for run in experiment["runs"]:
+        saved = run["config"]
+        name = saved["model"]["name"]
+        if name not in ("cnn", "resnet18", "cbam"):
+            continue
+        if saved["settings"] != settings:
+            raise ValueError("补充实验与原正式实验的训练设置或划分不一致")
+        if name == "cbam" and saved["model"] != asdict(ModelConfig("cbam", 16, 3)):
+            raise ValueError("原 ResNet18 + CBAM 的参数与补充实验不一致")
+        seed = saved["seed"]
+        run_dir = root / ModelConfig(**saved["model"]).run_id(seed)
+        training = json.loads((run_dir / "training.json").read_text(encoding="utf-8"))
+        references[name, seed] = score_row(run["metrics"], training["timing"])
+    seeds = (42, 43, 44)
+    if set(references) != {(name, seed) for name in ("cnn", "resnet18", "cbam") for seed in seeds}:
+        raise ValueError("需要三个骨干对照配置在种子 42、43、44 下的完整结果")
+
+    print("\n=== 补充实验 · CNN + CBAM（r=16，k=3）===", flush=True)
+    runs, scores, paired = [], [], []
+    for seed in seeds:
+        print(f"[补充实验] {config.run_id(seed)}", flush=True)
+        evaluation, score = train_and_test(root, config, seed, settings, train, val, test)
+        runs.append(evaluation)
+        scores.append(score)
+        baseline = references["cnn", seed]
+        delta = {
+            key: value - baseline[key] if value is not None and baseline[key] is not None else None
+            for key, value in score.items()
+        }
+        cnn_gain = 100 * (score["macro_f1"] - baseline["macro_f1"])
+        resnet_gain = 100 * (references["cbam", seed]["macro_f1"] - references["resnet18", seed]["macro_f1"])
+        paired.append({
+            "seed": seed, "cnn_cbam_minus_cnn": delta,
+            "cnn_f1_gain_pp": cnn_gain, "resnet18_f1_gain_pp": resnet_gain,
+            "gain_difference_pp": cnn_gain - resnet_gain,
+            "cnn_f1_relative_gain_pct": cnn_gain / baseline["macro_f1"] if baseline["macro_f1"] else None,
+        })
+    gain_keys = ("cnn_f1_gain_pp", "resnet18_f1_gain_pp", "gain_difference_pp", "cnn_f1_relative_gain_pct")
+    write_json(root / "supplement.json", {
+        "runs": runs, "group": summarize_runs(scores), "paired": paired,
+        "cnn_cbam_minus_cnn": summarize_runs([row["cnn_cbam_minus_cnn"] for row in paired]),
+        "gain_summary": summarize_runs([{key: row[key] for key in gain_keys} for row in paired]),
+    })
+    print(f"[SUCCEED] 补充实验完成，结果写入 {root / 'supplement.json'}", flush=True)
 
 
 def benchmark_training(device, batch_size, steps):
@@ -353,7 +419,7 @@ def benchmark_training(device, batch_size, steps):
 
 def main():
     parser = argparse.ArgumentParser(description="鱼类图像分类实验")
-    parser.add_argument("--stage", choices=("cnn", "preliminary", "experiment", "benchmark"), default="cnn")
+    parser.add_argument("--stage", choices=("cnn", "preliminary", "experiment", "supplement", "benchmark"), default="cnn")
     parser.add_argument("--batch-size", type=int, default=256, help="预实验或测速的训练批大小")
     parser.add_argument("--device", default="cpu", help="训练设备，例如 cpu 或 gpu:0")
     parser.add_argument("--benchmark-steps", type=int, default=4, help="测速批次数，包含一个预热批次")
@@ -422,7 +488,10 @@ def main():
         if settings != selection["settings"]:
             parser.error("当前设备线程设置或数据清单与预实验不一致")
         test = FishDataset("test", split_dir=split_dir)
-        run_experiment(root, selection, train, val, test)
+        if args.stage == "supplement":
+            run_supplement(root, settings, train, val, test)
+        else:
+            run_experiment(root, selection, train, val, test)
 
 
 if __name__ == "__main__":

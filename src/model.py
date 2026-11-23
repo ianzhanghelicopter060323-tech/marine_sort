@@ -76,6 +76,16 @@ class CBAM(paddle.nn.Layer):
         return features * F.sigmoid(self.spatial(spatial))
 
 
+class CNNWithCBAM(MyCNN):
+    """在原 CNN 的每次 ReLU 后、最大池化前施加 CBAM。"""
+
+    def __init__(self, ratio, kernel):
+        super().__init__()
+        self.pool1 = paddle.nn.Sequential(CBAM(20, ratio, kernel), self.pool1)
+        self.pool2 = paddle.nn.Sequential(CBAM(50, ratio, kernel), self.pool2)
+        self.pool3 = paddle.nn.Sequential(CBAM(50, ratio, kernel), self.pool3)
+
+
 class ResidualBlock(paddle.nn.Layer):
     """两个卷积组成残差分支，注意力位于分支相加之前。"""
 
@@ -199,6 +209,13 @@ class Model_CNN(_Classifier):
 
     def __init__(self):
         super().__init__(MyCNN(), use_softmax=False)
+
+
+class Model_CNN_CBAM(_Classifier):
+    """与原 CNN 共用训练接口和基于类别概率的交叉熵。"""
+
+    def __init__(self, ratio=16, kernel=3):
+        super().__init__(CNNWithCBAM(ratio, kernel), use_softmax=False)
 
 
 class Model_ResNet18(_Classifier):
